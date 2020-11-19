@@ -62,7 +62,7 @@ cosmic.get_tk_widget().grid(row=2, column=2)
 
 
 ###### muszę poradzić sobię z deltą, żeby animacja kończyła się na 360 stopniach
-d = np.linspace(0, 2*pi, 100)  # delta  
+d = np.linspace(0, 2*pi, 100)  # delta (chyba chodziło mi o alfę)  
 # d = pd.Series(np.linspace(0, 2*pi, 100))
 
 
