@@ -8,6 +8,9 @@ from math import pi, sqrt
 from pathlib import Path
 
 
+# kąt 67 linijka
+# sinus 120 linijka
+
 # numpy naprawić :c
 # żeby czcz.get() zmienniał się podczas pracy animacji
 # po co init
@@ -203,7 +206,7 @@ CheckSat = IntVar()
 tlop =tlo
 start = Button(planety, text="Start", command=run).grid(row=0, column=0)
 stap = Button(planety, text="Stop").grid(row=1, column=0)
-clean = Button(planety, text="Wyczyść").grid(row=2, column=0)
+#clean = Button(planety, text="Wyczyść").grid(row=2, column=0)
 
 blank = Label(planety,text="\n\n", bg=tlo).grid()
 
