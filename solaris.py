@@ -85,12 +85,17 @@ ax.add_artist(slonce)
 
 
 def run():
+    if 'animacja' in locals():
+        animacja.event_source.stop()
     print('start')
+
+
 
     def stop():
         if 'animacja' in locals():
             animacja.event_source.stop()
     stap = Button(planety, text="Stop", command=stop).grid(row=1, column=0)
+
 
     s = ss.get()  # skala
     cz = czcz.get()
@@ -101,6 +106,7 @@ def run():
     line3, = ax.plot([], [])
     line4, = ax.plot([], [])
     line5, = ax.plot([], [])
+
     # initialization function
     xdata1, ydata1 = [], []
     xdata2, ydata2 = [], []
@@ -135,69 +141,57 @@ def run():
 
             a1, b1, u1, v1, t1 = orbita(0.206, s * 0.388, s * 0.24, s * 0.2, 'rosybrown', i, line1)
 
-            ydata1.append(v1 + b1 * np.sin(i * t1 * cz/ 5000))
-            xdata1.append(u1 + a1 * np.cos(i * t1 * cz/ 5000))
+            ydata1.append(v1 + b1 * np.sin(i * t1 * cz/ 10000))
+            xdata1.append(u1 + a1 * np.cos(i * t1 * cz/ 10000))
             line1.set_data(xdata1, ydata1)
 
         if CheckWenus.get() == 1:
             a2, b2, u2, v2, t2 = orbita(0.0068, s * 0.723, s * 0.62, s * 0.4, 'mediumvioletred', i, line2)
 
-            ydata2.append(v2 + b2 * np.sin(i * t2 * cz / 5000))
-            xdata2.append(u2 + a2 * np.cos(i * t2 * cz / 5000))
+            ydata2.append(v2 + b2 * np.sin(i * t2 * cz / 10000))
+            xdata2.append(u2 + a2 * np.cos(i * t2 * cz / 10000))
             line2.set_data(xdata2, ydata2)
 
         if CheckZiemia.get() == 1:
             a3, b3, u3, v3, t3 = orbita(0.0147, s, s, s * 0.4, 'springgreen', i, line3)
 
-            ydata3.append(v3 + b3 * np.sin(i * t3 * cz / 5000))
-            xdata3.append(u3 + a3 * np.cos(i * t3 * cz / 5000))
+            ydata3.append(v3 + b3 * np.sin(i * t3 * cz / 10000))
+            xdata3.append(u3 + a3 * np.cos(i * t3 * cz / 10000))
             line3.set_data(xdata3, ydata3)
 
         if CheckMars.get() == 1:
 
             a4, b4, u4, v4, t4 = orbita(0.0934, s * 1.524, s * 1.88, s * 0.3, 'coral', i, line4)
 
-            ydata4.append(v4 + b4 * np.sin(i * t4 * cz / 5000))
-            xdata4.append(u4 + a4 * np.cos(i * t4 * cz / 5000))
+            ydata4.append(v4 + b4 * np.sin(i * t4 * cz / 10000))
+            xdata4.append(u4 + a4 * np.cos(i * t4 * cz / 10000))
             line4.set_data(xdata4, ydata4)
             
         if CheckJow.get() == 1:			
             a5, b5, u5, v5, t5 = orbita(0.0485, s * 5.203, s * 11.86, s, 'tan', i, line5)
 
-            ydata5.append(v5 + b5 * np.sin(i * t5 * cz / 5000))
-            xdata5.append(u5 + a5 * np.cos(i * t5* cz / 5000))
+            ydata5.append(v5 + b5 * np.sin(i * t5 * cz / 10000))
+            xdata5.append(u5 + a5 * np.cos(i * t5* cz / 10000))
             line5.set_data(xdata5, ydata5)
 
         return line1, line2, line3, line4, line5,
 
-
-    '''
-    if CheckMerk.get() == 1:
-        animacja = animation.FuncAnimation(fig, orbita(0.206, s * 0.388, s * 0.24, s * 0.2, 'rosybrown'),
-                                          frames=int(310 * s / cz), interval=20, blit=True)
-    if CheckWenus.get() == 1:
-        aniwenus = animation.FuncAnimation(fig, orbita(0.0068, s * 0.723, s * 0.62, s * 0.4, 'mediumvioletred'),
-                                           frames=int(790 * s / cz), interval=20, blit=True)
-    if CheckZiemia.get() == 1:
-        aniziem = animation.FuncAnimation(fig, orbita(0.0147, s, s, s * 0.4, 'springgreen'),
-                                          frames=int(1350 * s / cz), interval=20, blit=True)
-    if CheckMars.get() == 1:
-        animars = animation.FuncAnimation(fig, orbita(0.0934, s * 1.524, s * 1.88, s * 0.3, 'coral'),
-                                          frames=int(2350 * s / cz), interval=20, blit=True)
-    if CheckJow.get() == 1:
-        anijow = animation.FuncAnimation(fig, orbita(0.0485, s * 5.203, s * 11.86, s, 'tan'),
-                                         frames=int(15250 * s / cz), interval=20, blit=True)
-    '''
-
-    animacja = animation.FuncAnimation(fig, animate, interval=1, init_func=init, blit=True)  # frames=int(80000 * s / cz),
+    animacja = animation.FuncAnimation(fig, animate, interval=0.01, init_func=init, blit=True)  # frames=int(80000 * s / cz),
 
     def star():
         if 'animacja' in locals():
             animacja.event_source.start()
 
     def clean():
+        line1.clean()
+        line2, = ax.plot([], [])
+        line3, = ax.plot([], [])
+        line4, = ax.plot([], [])
+        line5, = ax.plot([], [])
+
         if 'animacja' in locals():
             animacja.frame_seq = animacja.new_frame_seq()
+
 
     def clean1():
         # os.execl(sys.executable, os.path.abspath(__file__), *sys.argv)
@@ -207,7 +201,7 @@ def run():
                 break
             else:
                 continue
-    #clean = Button(planety, text="Wyczyść", command=clean).grid(row=2, column=0)
+    clean = Button(planety, text="Wyczyść", command=clean).grid(row=2, column=0)
     print('end')
 
 
