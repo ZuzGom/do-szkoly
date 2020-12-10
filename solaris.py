@@ -8,11 +8,10 @@ from math import pi, sqrt
 from pathlib import Path
 
 
-# kąt 67 linijka
-# sinus 120 linijka
 
 # numpy naprawić :c
-# żeby czcz.get() zmienniał się podczas pracy animacji
+# ikona
+# żeby czcz.get() zmienniał się podczas
 # po co init
 
 tlo = '#1C2429'  # taki ciemnoszaroniebieski
@@ -34,6 +33,9 @@ if ikona.is_file():
 
 fig, ax = plt.subplots(figsize=(7, 7))
 
+#nx = int(fig.get_figwidth() * fig.dpi)
+#ny = int(fig.get_figheight() * fig.dpi)
+
 plt.tight_layout()
 
 fig.patch.set_facecolor('black')
@@ -42,10 +44,10 @@ ax.set_ylim(-10, 10)
 ax.axis('off')
 
 
-#próby (nieudane) usunięcia ramki
-
 #fig.patch.set_visible(False)
 #ax.patch.set_visible(False)
+
+#próby usunięcia ramki
 #fig = figure(frameon=False)
 #for item in [fig, ax]:
 #    item.patch.set_visible(False)
@@ -63,26 +65,27 @@ axes[0,2].remove()
 cosmic = FigureCanvasTkAgg(fig, master=okno)  # pole do osadzenia matplotlib w tkinter
 cosmic.get_tk_widget().grid(row=2, column=2)
 
-
-###### muszę poradzić sobię z deltą, żeby animacja kończyła się na 360 stopniach
-d = np.linspace(0, 2*pi, 100)  # delta (chyba chodziło mi o alfę)  
+d = np.linspace(0, 2*pi, 100)  # delta
 # d = pd.Series(np.linspace(0, 2*pi, 100))
 
 
-time_text = ax.text(0.02, 0.95, ' ', transform=ax.transAxes, color="white") # tekst który wyświetlał i dla każdej klatki, ale nic mi to nie mówiło
+time_text = ax.text(0.02, 0.95, ' ', transform=ax.transAxes, color="white")
+
 
 
 # def init():
 #   time_text.set_text('')
-#   line1.set_data([],[])
-#   return line1, time_text
-
+#  line1.set_data([],[])
+# return line1, time_text
 s = 4
 
 slonce = plt.Circle((0, 0), s * 0.1, color='yellow')
 ax.add_artist(slonce)
+#slonce.set_radius(s*0.04)
+
 
 def run():
+    print('start')
 
     def stop():
         if 'animacja' in locals():
@@ -90,63 +93,104 @@ def run():
     stap = Button(planety, text="Stop", command=stop).grid(row=1, column=0)
 
     s = ss.get()  # skala
-    cz = czcz.get() # upływ czasu
-    slonce.set_radius(ss.get() * 0.1) 
+    cz = czcz.get()
+    slonce.set_radius(ss.get() * 0.1)
 
-    def animate(i):  # animacja wszystkich linii na raz
+    line1, = ax.plot([], [])
+    line2, = ax.plot([], [])
+    line3, = ax.plot([], [])
+    line4, = ax.plot([], [])
+    line5, = ax.plot([], [])
+    # initialization function
+    xdata1, ydata1 = [], []
+    xdata2, ydata2 = [], []
+    xdata3, ydata3 = [], []
+    xdata4, ydata4 = [], []
+    xdata5, ydata5 = [], []
 
-        line1, = ax.plot([], [])
-        line2, = ax.plot([], [])
-        line3, = ax.plot([], [])
-        line4, = ax.plot([], [])
-        line5, = ax.plot([], [])
+    def init():
+        # creating an empty plot/frame
+        line1.set_data([], [])
+        line2.set_data([], [])
+        line3.set_data([], [])
+        line4.set_data([], [])
+        line5.set_data([], [])
+        return line1, line2, line2, line4, line5,
 
-        def orbita(e, a, T, g, col, i, line, ):  # po kolei: mimośród, mała półoś, duża, grubość linii, color, iterowana zmienna, linia
+
+
+    # lists to store x and y axis points
+    def animate(i):  # ziemia
+
+        def orbita(e, a, T, g, col, i, line, ):
             b = sqrt(a ** 2 * (1 - e ** 2))  # mała półoś
             u = sqrt(a ** 2 - b ** 2)  # x przesunięty o ogniskową
             v = 0  # y
             plt.setp(line, animated=True, linestyle=':', linewidth=1.5 * g, color=col)
-            t = (2 * pi) / T * d * i
-            return a, b, u, v, t, T
-        
-        # definiuję dla każdej planety oddzielną linię
+            t = (2 * pi) / T  # * d
+            #print(t)
+            return a, b, u, v, t
 
         if CheckMerk.get() == 1:
-            a1, b1, u1, v1, t1, T1 = orbita(0.206, s * 0.388, s * 0.24, s * 0.2, 'rosybrown', i, line1)
-            
-            #### myślę, że należy zrobić to tutaj po sinusie, jednak nie mam pomysłu jak
-            #### myślałam, żeby połączyć serie danych z pandas oraz array z numpy ale sama nie wiem
-            
-            line1.set_ydata(v1 + b1 * np.sin(d * cz * t1 / 50000))  # dlaczego tych linijek nie wstawiłam do funkcji orbita()?
-            line1.set_xdata(u1 + a1 * np.cos(d * cz * t1 / 50000))  # nie wiem
+
+            a1, b1, u1, v1, t1 = orbita(0.206, s * 0.388, s * 0.24, s * 0.2, 'rosybrown', i, line1)
+
+            ydata1.append(v1 + b1 * np.sin(i * t1 * cz/ 5000))
+            xdata1.append(u1 + a1 * np.cos(i * t1 * cz/ 5000))
+            line1.set_data(xdata1, ydata1)
 
         if CheckWenus.get() == 1:
-            a2, b2, u2, v2, t2, T2 = orbita(0.0068, s * 0.723, s * 0.62, s * 0.4, 'mediumvioletred', i, line2)
-            line2.set_ydata(v2 + b2 * np.sin(d * cz * t2 / 50000))
-            line2.set_xdata(u2 + a2 * np.cos(d * cz * t2 / 50000))
+            a2, b2, u2, v2, t2 = orbita(0.0068, s * 0.723, s * 0.62, s * 0.4, 'mediumvioletred', i, line2)
+
+            ydata2.append(v2 + b2 * np.sin(i * t2 * cz / 5000))
+            xdata2.append(u2 + a2 * np.cos(i * t2 * cz / 5000))
+            line2.set_data(xdata2, ydata2)
 
         if CheckZiemia.get() == 1:
-            a3, b3, u3, v3, t3, T3 = orbita(0.0147, s, s, s * 0.4, 'springgreen', i, line3)
-            line3.set_ydata(v3 + b3 * np.sin(d * cz * t3 / 50000))
-            line3.set_xdata(u3 + a3 * np.cos(d * cz * t3 / 50000))
+            a3, b3, u3, v3, t3 = orbita(0.0147, s, s, s * 0.4, 'springgreen', i, line3)
+
+            ydata3.append(v3 + b3 * np.sin(i * t3 * cz / 5000))
+            xdata3.append(u3 + a3 * np.cos(i * t3 * cz / 5000))
+            line3.set_data(xdata3, ydata3)
 
         if CheckMars.get() == 1:
-            a4, b4, u4, v4, t4, T4 = orbita(0.0934, s * 1.524, s * 1.88, s * 0.3, 'coral', i, line4)
-            line4.set_ydata(v4 + b4 * np.sin(d * cz * t4 / 50000))
-            line4.set_xdata(u4 + a4 * np.cos(d * cz * t4 / 50000))
+
+            a4, b4, u4, v4, t4 = orbita(0.0934, s * 1.524, s * 1.88, s * 0.3, 'coral', i, line4)
+
+            ydata4.append(v4 + b4 * np.sin(i * t4 * cz / 5000))
+            xdata4.append(u4 + a4 * np.cos(i * t4 * cz / 5000))
+            line4.set_data(xdata4, ydata4)
             
         if CheckJow.get() == 1:			
-            a5, b5, u5, v5, t5, T5 = orbita(0.0485, s * 5.203, s * 11.86, s, 'tan', i, line5)
-            line5.set_ydata(v5 + b5 * np.sin(d * cz * t5 / 50000))
-            line5.set_xdata(u5 + a5 * np.cos(d * cz * t5 / 50000))
+            a5, b5, u5, v5, t5 = orbita(0.0485, s * 5.203, s * 11.86, s, 'tan', i, line5)
+
+            ydata5.append(v5 + b5 * np.sin(i * t5 * cz / 5000))
+            xdata5.append(u5 + a5 * np.cos(i * t5* cz / 5000))
+            line5.set_data(xdata5, ydata5)
 
         return line1, line2, line3, line4, line5,
 
 
-    animacja = animation.FuncAnimation(fig, animate, frames=int(400 * s / cz), interval=20, blit=True)
+    '''
+    if CheckMerk.get() == 1:
+        animacja = animation.FuncAnimation(fig, orbita(0.206, s * 0.388, s * 0.24, s * 0.2, 'rosybrown'),
+                                          frames=int(310 * s / cz), interval=20, blit=True)
+    if CheckWenus.get() == 1:
+        aniwenus = animation.FuncAnimation(fig, orbita(0.0068, s * 0.723, s * 0.62, s * 0.4, 'mediumvioletred'),
+                                           frames=int(790 * s / cz), interval=20, blit=True)
+    if CheckZiemia.get() == 1:
+        aniziem = animation.FuncAnimation(fig, orbita(0.0147, s, s, s * 0.4, 'springgreen'),
+                                          frames=int(1350 * s / cz), interval=20, blit=True)
+    if CheckMars.get() == 1:
+        animars = animation.FuncAnimation(fig, orbita(0.0934, s * 1.524, s * 1.88, s * 0.3, 'coral'),
+                                          frames=int(2350 * s / cz), interval=20, blit=True)
+    if CheckJow.get() == 1:
+        anijow = animation.FuncAnimation(fig, orbita(0.0485, s * 5.203, s * 11.86, s, 'tan'),
+                                         frames=int(15250 * s / cz), interval=20, blit=True)
+    '''
 
-    
-    #poniższe funkcje są niepotrzebne, ponadto nie działają
+    animacja = animation.FuncAnimation(fig, animate, interval=1, init_func=init, blit=True)  # frames=int(80000 * s / cz),
+
     def star():
         if 'animacja' in locals():
             animacja.event_source.start()
@@ -164,6 +208,16 @@ def run():
             else:
                 continue
     #clean = Button(planety, text="Wyczyść", command=clean).grid(row=2, column=0)
+    print('end')
+
+
+
+
+
+    # 1.524 0.0934
+    # 5.203 0.0485
+    # 9.539 0.0556
+
 
 
 # interfejs
@@ -196,6 +250,7 @@ planety = Frame(okno, bg=tlo)
 planety.grid(row=2, column=0)
 
 
+
 CheckMerk = IntVar()
 CheckWenus = IntVar()
 CheckZiemia = IntVar()
@@ -206,7 +261,8 @@ CheckSat = IntVar()
 tlop =tlo
 start = Button(planety, text="Start", command=run).grid(row=0, column=0)
 stap = Button(planety, text="Stop").grid(row=1, column=0)
-#clean = Button(planety, text="Wyczyść").grid(row=2, column=0)
+clean = Button(planety, text="Wyczyść", bitmap="info", bg=tlo, fg='white', bd=0).grid(row=2, column=0)
+
 
 blank = Label(planety,text="\n\n", bg=tlo).grid()
 
@@ -230,5 +286,6 @@ saturn = Checkbutton(planety, text="Saturn", fg="lightsteelblue", bg=tlop,
 
 
 # funkcja to zmieniania labeli to mylabel.configure
+
 
 okno.mainloop()
