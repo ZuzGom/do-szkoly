@@ -1,0 +1,7 @@
+import numpy as np
+from scipy import ndimage
+from matplotlib import pyplot as plt, cm
+from scipy import misc
+
+random_image = np.random.rand(500, 1500)
+plt.imshow(random_image, cmap=cm.gray, interpolation='nearest');
