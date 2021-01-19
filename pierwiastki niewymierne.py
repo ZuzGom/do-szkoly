@@ -10,7 +10,7 @@ while line[0] != '0':
     wsp.append(line)
 
 wsp.sort(reverse=True)
-print(wsp)
+
 nazwa = ''
 print('Twój wielomian to: ')
 for i in range(len(wsp)):
@@ -27,35 +27,58 @@ def wielomian(x):
         pomoc += int(y[1]) * (x ** int(y[0]))
     return pomoc
 
+
 end = 100
 
-#wielomian(beg)
-#wielomian(end)
+# wielomian(beg)
+# wielomian(end)
 
-if int(wsp[0][1])>0:
-    while wielomian(end)<0:
-        end += 10
-        print(end)
-    beg = end - 10
-    while wielomian(beg)>0:
-        beg -= 10
-        print(beg)
-    end = beg + 10
-    print(end)
 
+if int(wsp[0][1]) == 0 and len(wsp) == 1:
+    if wielomian(end) == 0:
+        wynik = 'nieskonczenie wiele miejsc zerowych'
+    else:
+        wynik = 'brak miejsc zerowych'
 else:
-    if int(wsp[0][1]) == 0:
-        if wielomian(end) == 0:
-            wynik = 'nieskonczenie wiele miejsc zerowych'
-        else:
-            wynik = 'brak miejsc zerowych'
+    if int(wsp[0][1]) > 0:
+        while wielomian(end) < 0:
+            end += 10
+        beg = end - 10
+        while wielomian(beg) > 0:
+            beg -= 10
+        end = beg + 10
+        print(beg)
+        print(end)
+
+        wynik = (beg + end)/2
+
+        while wielomian(wynik) != 0:
+            wynik = (beg + end) / 2
+            if wielomian(wynik) < 0:
+                beg = wynik
+            if wielomian(wynik) > 0:
+                end = wynik
+            print(wielomian(wynik))
+
     else:
         while wielomian(end) > 0:
             end += 10
-            print(end)
         beg = end - 10
         while wielomian(beg) < 0:
             beg -= 10
-            print(beg)
         end = beg + 10
+        print(beg)
         print(end)
+
+        wynik = beg
+
+        while wielomian(wynik) != 0:
+            wynik = (beg + end) / 2
+            if wielomian(wynik) > 0:
+                beg = wynik
+            if wielomian(wynik) < 0:
+                end = wynik
+            print(wynik)
+
+print('wynik')
+print(wynik)
