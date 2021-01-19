@@ -33,9 +33,8 @@ end = 100
 # wielomian(beg)
 # wielomian(end)
 
-
-if int(wsp[0][1]) == 0 and len(wsp) == 1:
-    if wielomian(end) == 0:
+if int(wsp[0][0]) == 0 and len(wsp) == 1:
+    if wsp[0][1] == '0':
         wynik = 'nieskonczenie wiele miejsc zerowych'
     else:
         wynik = 'brak miejsc zerowych'
@@ -58,7 +57,6 @@ else:
                 beg = wynik
             if wielomian(wynik) > 0:
                 end = wynik
-            print(wielomian(wynik))
 
     else:
         while wielomian(end) > 0:
@@ -67,8 +65,6 @@ else:
         while wielomian(beg) < 0:
             beg -= 10
         end = beg + 10
-        print(beg)
-        print(end)
 
         wynik = beg
 
@@ -78,7 +74,6 @@ else:
                 beg = wynik
             if wielomian(wynik) < 0:
                 end = wynik
-            print(wynik)
 
-print('wynik')
+print('Jeden z pierwiastków to: ')
 print(wynik)
