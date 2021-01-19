@@ -27,5 +27,35 @@ def wielomian(x):
         pomoc += int(y[1]) * (x ** int(y[0]))
     return pomoc
 
-print(wielomian(1))
-print(wielomian(-1))
+end = 100
+
+#wielomian(beg)
+#wielomian(end)
+
+if int(wsp[0][1])>0:
+    while wielomian(end)<0:
+        end += 10
+        print(end)
+    beg = end - 10
+    while wielomian(beg)>0:
+        beg -= 10
+        print(beg)
+    end = beg + 10
+    print(end)
+
+else:
+    if int(wsp[0][1]) == 0:
+        if wielomian(end) == 0:
+            wynik = 'nieskonczenie wiele miejsc zerowych'
+        else:
+            wynik = 'brak miejsc zerowych'
+    else:
+        while wielomian(end) > 0:
+            end += 10
+            print(end)
+        beg = end - 10
+        while wielomian(beg) < 0:
+            beg -= 10
+            print(beg)
+        end = beg + 10
+        print(end)
