@@ -2,8 +2,8 @@ print('Skrypt do wyszukiwania nieparzystych miejsc zerowych wielomianu\n')
 
 krok = float(input('Podaj krok \n(im mniejszy, tym większa dokładność [default::1] ): '))
 
-print('\nPodaj wpsółczynniki w formacie: \n\npotęga_przy_zmiennej wpsółczynnik\n\n'
-      'kończąc na wyrazie wolnym (0 0) np:\n\n'
+print('\nPodaj wpsółczynniki w formacie: \n\npotęga wpsółczynnik\n\n'
+      'kończąc na wyrazie wolnym (0 _) np:\n\n'
       '1 2\n0 3\n\nto 2x^1 + 3\n')
 
 line = ['']
@@ -120,9 +120,10 @@ else:
                 print(wynik)
                 lista.append(wynik)
 
-print('\nSugerować pierwiastki niewymierne? (y/n)')
+lista.sort()
+print('\nSugerować pierwiastki niewymierne?')
 print(lista)
-czy = input()
+czy = input('y/n: ')
 if czy == 'y':
     pierwiastki = [0.4142135623730949, 0.7320508075688772, 4, 0.2360679774997898,
                    0.4494897427831779, 0.6457513110645907, 0.8284271247461898, 9, 0.16227766016837908,
