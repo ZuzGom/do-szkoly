@@ -33,6 +33,8 @@ end = 100
 # wielomian(beg)
 # wielomian(end)
 
+c = 0  # counter
+
 if int(wsp[0][0]) == 0 and len(wsp) == 1:
     if wsp[0][1] == '0':
         wynik = 'nieskonczenie wiele miejsc zerowych'
@@ -46,17 +48,18 @@ else:
         while wielomian(beg) > 0:
             beg -= 10
         end = beg + 10
-        print(beg)
-        print(end)
 
         wynik = (beg + end)/2
 
         while wielomian(wynik) != 0:
             wynik = (beg + end) / 2
+            if end == wynik or beg == wynik:
+                break
             if wielomian(wynik) < 0:
                 beg = wynik
             if wielomian(wynik) > 0:
                 end = wynik
+
 
     else:
         while wielomian(end) > 0:
@@ -70,6 +73,8 @@ else:
 
         while wielomian(wynik) != 0:
             wynik = (beg + end) / 2
+            if end == wynik or beg == wynik:
+                break
             if wielomian(wynik) > 0:
                 beg = wynik
             if wielomian(wynik) < 0:
