@@ -7,9 +7,9 @@ int main()
     int c, n;
     float suma = 0;
 	int *ptr;
-	ptr = (int*) malloc(5*sizeof(int));
 	cout<<"Ile ocen: ";
     cin>> n;
+    ptr = (int*) malloc(n+1);
 	if(!ptr)
 		exit(1);
 
