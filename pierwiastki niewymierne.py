@@ -1,7 +1,7 @@
 print('Skrypt do wyszukiwania nieparzystych miejsc zerowych wielomianu\n')
 
-krok = float(input('Podaj krok \n(im mniejszy, tym większa dokładność [default::1] ): '))
-
+# krok = float(input('Podaj krok \n(im mniejszy, tym większa dokładność [default::1] ): '))
+krok = 0.1
 print('\nPodaj wpsółczynniki w formacie: \n\npotęga wpsółczynnik\n\n'
       'kończąc na wyrazie wolnym (0 _) np:\n\n'
       '1 2\n0 3\n\nto 2x^1 + 3\n')
@@ -137,6 +137,5 @@ if czy == 'y':
             if pierwiastki[x] == i:
                 print('Sugestia dla ' + str(p))
                 print('√'+str(x+2))
-    print('To wszystko')
-else:
-    print('To wszystko')
+print('To wszystko')
+
