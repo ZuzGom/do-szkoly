@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 from tkinter import *
+from tkinter import messagebox
+
 import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
@@ -80,34 +82,48 @@ slonce = plt.Circle((0, 0), s * 0.1, color='yellow')
 ax.add_artist(slonce)
 # slonce.set_radius(s*0.04)
 
-
-def run():
-    global animacja
-    if 'animacja' in locals():
-        animacja.event_source.stop()
-    print('start')
-
-    def stop():
-        if 'animacja' in locals():
-            animacja.event_source.stop()
-    stap = Button(planety, text="Stop", command=stop).grid(row=1, column=0)
-
-    s = ss.get()  # skala
-    cz = czcz.get()
-    slonce.set_radius(ss.get() * 0.1)
-
-    line1, = ax.plot([], [])
-    line2, = ax.plot([], [])
-    line3, = ax.plot([], [])
-    line4, = ax.plot([], [])
-    line5, = ax.plot([], [])
+line1, = ax.plot([], [])
+line2, = ax.plot([], [])
+line3, = ax.plot([], [])
+line4, = ax.plot([], [])
+line5, = ax.plot([], [])
 
     # initialization function
+xdata1, ydata1 = [], []
+xdata2, ydata2 = [], []
+xdata3, ydata3 = [], []
+xdata4, ydata4 = [], []
+xdata5, ydata5 = [], []
+
+
+def stop():
+    if 'animacja' in globals():
+        animacja.event_source.stop()
+
+
+def run():
+    global xdata1, ydata1, \
+        xdata2, ydata2, \
+        xdata3, ydata3, \
+        xdata4, ydata4, \
+        xdata5, ydata5
+    global line1, line2, line3, line4, line5, animacja, slonce
     xdata1, ydata1 = [], []
     xdata2, ydata2 = [], []
     xdata3, ydata3 = [], []
     xdata4, ydata4 = [], []
     xdata5, ydata5 = [], []
+
+    print('start')
+
+
+    stop()
+    #stap = Button(planety, text="Stop", command=stop).grid(row=1, column=0)
+
+    s = ss.get()  # skala
+    cz = czcz.get()
+    slonce.set_radius(ss.get() * 0.1)
+
 
     def init():
         # creating an empty plot/frame
@@ -134,8 +150,8 @@ def run():
 
             a1, b1, u1, v1, t1 = orbita(0.206, s * 0.388, s * 0.24, s * 0.2, 'rosybrown', i, line1)
 
-            ydata1.append(v1 + b1 * np.sin(i * t1 * cz/ 10000))
-            xdata1.append(u1 + a1 * np.cos(i * t1 * cz/ 10000))
+            ydata1.append(v1 + b1 * np.sin(i * t1 * cz / 10000))
+            xdata1.append(u1 + a1 * np.cos(i * t1 * cz / 10000))
             line1.set_data(xdata1, ydata1)
 
         if CheckWenus.get() == 1:
@@ -171,25 +187,23 @@ def run():
 
     animacja = animation.FuncAnimation(fig, animate, interval=0.01, init_func=init, blit=True)  # frames=int(80000 * s / cz),
 
-    def star():
-        if 'animacja' in locals():
-            animacja.event_source.start()
 
-    def clean():
-        nonlocal xdata1, ydata1, \
-            xdata2, ydata2, \
-            xdata3, ydata3, \
-            xdata4, ydata4, \
-            xdata5, ydata5
+def clean():
+    global xdata1, ydata1, \
+        xdata2, ydata2, \
+        xdata3, ydata3, \
+        xdata4, ydata4, \
+        xdata5, ydata5
 
-        xdata1, ydata1 = [], []
-        xdata2, ydata2 = [], []
-        xdata3, ydata3 = [], []
-        xdata4, ydata4 = [], []
-        xdata5, ydata5 = [], []
+    xdata1, ydata1 = [], []
+    xdata2, ydata2 = [], []
+    xdata3, ydata3 = [], []
+    xdata4, ydata4 = [], []
+    xdata5, ydata5 = [], []
 
-    clear = Button(planety, text="Wyczyść", command=clean).grid(row=2, column=0)
-    print('end')
+#clear = Button(planety, text="Wyczyść", command=clean).grid(row=2, column=0)
+
+print('end')
 
     # 1.524 0.0934
     # 5.203 0.0485
@@ -235,8 +249,8 @@ CheckSat = IntVar()
 
 tlop = tlo
 start = Button(planety, text="Start", command=run).grid(row=0, column=0)
-stap = Button(planety, text="Stop").grid(row=1, column=0)
-clear = Button(planety, text="Wyczyść", bitmap="info", bg=tlo, fg='white', bd=0).grid(row=2, column=0)
+stap = Button(planety, text="Stop", command=stop).grid(row=1, column=0)
+clear = Button(planety, text="Wyczyść", comman=clean).grid(row=2, column=0)
 
 
 blank = Label(planety, text="\n\n", bg=tlo).grid()
@@ -261,6 +275,11 @@ saturn = Checkbutton(planety, text="Saturn", fg="lightsteelblue", bg=tlop,
 
 
 # funkcja to zmieniania labeli to mylabel.configure
+def on_closing():
+    if messagebox.askokcancel("Wyjście", "Chcesz zaknąć program?"):
+        okno.destroy()
 
+
+okno.protocol("WM_DELETE_WINDOW", on_closing)
 
 okno.mainloop()
