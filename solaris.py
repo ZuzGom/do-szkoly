@@ -8,8 +8,6 @@ from math import pi, sqrt
 from pathlib import Path
 
 
-
-# numpy naprawić :c
 # ikona
 # żeby czcz.get() zmienniał się podczas
 # po co init
@@ -21,7 +19,7 @@ okno = Tk()
 okno.title('Układ Słoneczny')
 okno['bg'] = tlo
 
-ikona=Path('icona.ico')
+ikona = Path('icona.ico')
 
 if ikona.is_file():
     okno.iconbitmap('icona.ico')
@@ -33,8 +31,8 @@ if ikona.is_file():
 
 fig, ax = plt.subplots(figsize=(7, 7))
 
-#nx = int(fig.get_figwidth() * fig.dpi)
-#ny = int(fig.get_figheight() * fig.dpi)
+# nx = int(fig.get_figwidth() * fig.dpi)
+# ny = int(fig.get_figheight() * fig.dpi)
 
 plt.tight_layout()
 
@@ -44,15 +42,15 @@ ax.set_ylim(-10, 10)
 ax.axis('off')
 
 
-#fig.patch.set_visible(False)
-#ax.patch.set_visible(False)
+# fig.patch.set_visible(False)
+# ax.patch.set_visible(False)
 
-#próby usunięcia ramki
-#fig = figure(frameon=False)
-#for item in [fig, ax]:
+# próby usunięcia ramki
+# fig = figure(frameon=False)
+# for item in [fig, ax]:
 #    item.patch.set_visible(False)
-#ax.axis('off')
-#ax.set_axis_off()
+# ax.axis('off')
+# ax.set_axis_off()
 
 '''
 axes[0,1].clear()
@@ -71,8 +69,7 @@ d = np.linspace(0, 2*pi, 100)  # delta
 
 time_text = ax.text(0.02, 0.95, ' ', transform=ax.transAxes, color="white")
 
-
-
+global animacja
 # def init():
 #   time_text.set_text('')
 #  line1.set_data([],[])
@@ -81,21 +78,19 @@ s = 4
 
 slonce = plt.Circle((0, 0), s * 0.1, color='yellow')
 ax.add_artist(slonce)
-#slonce.set_radius(s*0.04)
+# slonce.set_radius(s*0.04)
 
 
 def run():
+    global animacja
     if 'animacja' in locals():
         animacja.event_source.stop()
     print('start')
-
-
 
     def stop():
         if 'animacja' in locals():
             animacja.event_source.stop()
     stap = Button(planety, text="Stop", command=stop).grid(row=1, column=0)
-
 
     s = ss.get()  # skala
     cz = czcz.get()
@@ -122,8 +117,6 @@ def run():
         line4.set_data([], [])
         line5.set_data([], [])
         return line1, line2, line2, line4, line5,
-
-
 
     # lists to store x and y axis points
     def animate(i):  # ziemia
@@ -183,35 +176,24 @@ def run():
             animacja.event_source.start()
 
     def clean():
-        line1.clean()
-        line2, = ax.plot([], [])
-        line3, = ax.plot([], [])
-        line4, = ax.plot([], [])
-        line5, = ax.plot([], [])
+        nonlocal xdata1, ydata1, \
+            xdata2, ydata2, \
+            xdata3, ydata3, \
+            xdata4, ydata4, \
+            xdata5, ydata5
 
-        if 'animacja' in locals():
-            animacja.frame_seq = animacja.new_frame_seq()
+        xdata1, ydata1 = [], []
+        xdata2, ydata2 = [], []
+        xdata3, ydata3 = [], []
+        xdata4, ydata4 = [], []
+        xdata5, ydata5 = [], []
 
-
-    def clean1():
-        # os.execl(sys.executable, os.path.abspath(__file__), *sys.argv)
-        while True:  # Use True instead of 1
-            run()
-            if run() is None:  # The function call is equal to what it returned
-                break
-            else:
-                continue
-    clean = Button(planety, text="Wyczyść", command=clean).grid(row=2, column=0)
+    clear = Button(planety, text="Wyczyść", command=clean).grid(row=2, column=0)
     print('end')
-
-
-
-
 
     # 1.524 0.0934
     # 5.203 0.0485
     # 9.539 0.0556
-
 
 
 # interfejs
@@ -231,18 +213,17 @@ sczas = Scale(okno, variable=czcz, bg=tlo, fg='gray',
 czcz.set(10)
 
 
-sca = Frame (okno, bg=tlo)
+sca = Frame(okno, bg=tlo)
 sca.grid(row=2, column=3)
-tss= Label(sca, bg =tlo, fg='white', text="       skala       \n").grid()
+tss = Label(sca, bg=tlo, fg='white', text="       skala       \n").grid()
 ss = IntVar()
-sss= Scale(sca, variable=ss, bg=tlo, fg='gray',
-           orient=VERTICAL, length= 394, from_=1, to_=5).grid()
+sss = Scale(sca, variable=ss, bg=tlo, fg='gray',
+            orient=VERTICAL, length=394, from_=1, to_=5).grid()
 ss.set(4)
 
 
 planety = Frame(okno, bg=tlo)
 planety.grid(row=2, column=0)
-
 
 
 CheckMerk = IntVar()
@@ -252,13 +233,13 @@ CheckMars = IntVar()
 CheckJow = IntVar()
 CheckSat = IntVar()
 
-tlop =tlo
+tlop = tlo
 start = Button(planety, text="Start", command=run).grid(row=0, column=0)
 stap = Button(planety, text="Stop").grid(row=1, column=0)
-clean = Button(planety, text="Wyczyść", bitmap="info", bg=tlo, fg='white', bd=0).grid(row=2, column=0)
+clear = Button(planety, text="Wyczyść", bitmap="info", bg=tlo, fg='white', bd=0).grid(row=2, column=0)
 
 
-blank = Label(planety,text="\n\n", bg=tlo).grid()
+blank = Label(planety, text="\n\n", bg=tlo).grid()
 
 merkury = Checkbutton(planety, text="Merkury", fg="peru", bg=tlop,
                       variable=CheckMerk, onvalue=1, offvalue=0).grid(sticky=W)
