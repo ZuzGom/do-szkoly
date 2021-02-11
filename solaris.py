@@ -7,7 +7,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from math import pi, sqrt
-from pathlib import Path
+
 
 
 # ikona
@@ -21,10 +21,6 @@ okno = Tk()
 okno.title('Układ Słoneczny')
 okno['bg'] = tlo
 
-ikona = Path('icona.ico')
-
-if ikona.is_file():
-    okno.iconbitmap('icona.ico')
 
 # wykres
 
@@ -276,7 +272,7 @@ saturn = Checkbutton(planety, text="Saturn", fg="lightsteelblue", bg=tlop,
 
 # funkcja to zmieniania labeli to mylabel.configure
 def on_closing():
-    if messagebox.askokcancel("Wyjście", "Chcesz zaknąć program?"):
+    if messagebox.askokcancel("Wyjście", "Chcesz zamknąć program?"):
         okno.destroy()
 
 
