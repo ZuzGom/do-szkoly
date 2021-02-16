@@ -10,6 +10,21 @@ line = ['']
 wsp = []
 lista = []
 
+
+def przyb(y, d):
+    d = 1/d
+    x = int(y * d * 10)
+    if y < 0:
+        x = -x
+    if x % 10 > 4:
+        x += 1
+    x = int(x/d)
+    x = x/(d*10)
+    if y < 0:
+        x = -x
+    return x
+
+
 while line[0] != '0':
     line = input().split()
     wsp.append(line)
@@ -79,6 +94,7 @@ else:
                 break
             else:
                 print('\nJeden z pierwiastków to: ')
+                wynik = przyb(wynik, 1)
                 print(wynik)
                 lista.append(wynik)
 
@@ -117,6 +133,7 @@ else:
                 break
             else:
                 print('\nJeden z pierwiastków to: ')
+                wynik = przyb(wynik, 1)
                 print(wynik)
                 lista.append(wynik)
 
@@ -138,4 +155,3 @@ if czy == 'y':
                 print('Sugestia dla ' + str(p))
                 print('√'+str(x+2))
 print('To wszystko')
-
