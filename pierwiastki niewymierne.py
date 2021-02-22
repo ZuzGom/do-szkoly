@@ -1,7 +1,7 @@
 print('Skrypt do wyszukiwania nieparzystych miejsc zerowych wielomianu\n')
 
 # krok = float(input('Podaj krok \n(im mniejszy, tym większa dokładność [default::1] ): '))
-krok = 0.1
+krok = 0.001
 print('\nPodaj wpsółczynniki w formacie: \n\npotęga wpsółczynnik\n\n'
       'kończąc na wyrazie wolnym (0 _) np:\n\n'
       '1 2\n0 3\n\nto 2x^1 + 3\n')
@@ -9,21 +9,6 @@ print('\nPodaj wpsółczynniki w formacie: \n\npotęga wpsółczynnik\n\n'
 line = ['']
 wsp = []
 lista = []
-
-
-def przyb(y, d):
-    d = 1/d
-    x = int(y * d * 10)
-    if y < 0:
-        x = -x
-    if x % 10 > 4:
-        x += 1
-    x = int(x/d)
-    x = x/(d*10)
-    if y < 0:
-        x = -x
-    return x
-
 
 while line[0] != '0':
     line = input().split()
@@ -94,7 +79,7 @@ else:
                 break
             else:
                 print('\nJeden z pierwiastków to: ')
-                wynik = przyb(wynik, 1)
+                wynik = round(wynik, 10)
                 print(wynik)
                 lista.append(wynik)
 
@@ -133,7 +118,7 @@ else:
                 break
             else:
                 print('\nJeden z pierwiastków to: ')
-                wynik = przyb(wynik, 1)
+                wynik = round(wynik, 10)
                 print(wynik)
                 lista.append(wynik)
 
@@ -142,9 +127,9 @@ print('\nSugerować pierwiastki niewymierne?')
 print(lista)
 czy = input('y/n: ')
 if czy == 'y':
-    pierwiastki = [0.4142135623730949, 0.7320508075688772, 4, 0.2360679774997898,
-                   0.4494897427831779, 0.6457513110645907, 0.8284271247461898, 9, 0.16227766016837908,
-                   0.3166247903553998, 12, 0.6055512754639896]
+    pierwiastki = [0.4142135624, 0.7320508076, 4, 0.2360679775,
+                   0.4494897428, 0.6457513111, 0.8284271247, 9, 0.1622776602,
+                   0.3166247904, 0.4641016151, 0.6055512755]
     for p in lista:
         if p < 0:
             i = (-p) % 1
