@@ -4,16 +4,16 @@ using namespace std;
 
 int main()
 {
-    unsigned int miasta;
-    int zysk, z_miasta, max;
+    int miasta;
+    long zysk, z_miasta, max;
 
-    cin >> miasta;
+    scanf("%i", &miasta);
     zysk = 0;
     max = 0;
 
     for(int i=0; i<miasta; i++)
     {
-        cin >> z_miasta;
+        scanf("%ld", &z_miasta);
         zysk += z_miasta;
         if (zysk<0)
             zysk =0;
@@ -21,6 +21,6 @@ int main()
             max = zysk;
     }
 
-    cout << max;
+    printf("%ld", max);
     return 0;
 }
