@@ -2,3 +2,8 @@
 /Include
 /Lib
 /Scripts
+/build
+/.vscode
+/dist
+/__pycache__
+solaris.spec
