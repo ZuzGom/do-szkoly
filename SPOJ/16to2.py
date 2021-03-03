@@ -6,7 +6,6 @@ for x in liczba:
         cyf.append(int(x))
     except ValueError:
         cyf.append(ord(x)-55)
-print(cyf)
 
 wynik = ""
 
