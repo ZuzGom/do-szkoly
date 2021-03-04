@@ -18,4 +18,4 @@ for x in cyf:
             wynik += '1'
         else:
             wynik += '0'
-print(wynik)
+print('Liczba w dwójkowym:', wynik)
