@@ -8,8 +8,6 @@ while (2**($b/2 - 1)<=$liczba){
     $b =<>;
 }
 $wynik = 0;
-my @a = (1..$b);
-
 
 my @wg = (1..$b);
 
