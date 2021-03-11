@@ -19,19 +19,16 @@ for $i (1..$b){
 }
 #print "@wg\n";
 
-$zer = "0";
-$jed ="1";
-
 $wynik = "";
 $suma = 0;
 
 for $x (@wg){
     if ($suma + $x <= $liczba){
         $suma += $x;
-        $wynik = $wynik.$jed;
+        $wynik = $wynik."1";
     }
     else{
-        $wynik = $wynik.$zer; 
+        $wynik = $wynik."0"; 
     }
     
 }
