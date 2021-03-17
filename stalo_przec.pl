@@ -3,7 +3,7 @@ $liczba = <>;
 
 print "Podaj liczbę bitów (ale dobrą): ";
 $b =<>;
-while (2**($b/2 - 1)<=$liczba){
+while (2**($b/2 - 1)<=$liczba or $b%2 == 1){
     print "Podaj liczbę bitów (ale dobrą): ";
     $b =<>;
 }
