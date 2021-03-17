@@ -3,7 +3,11 @@
 /Lib
 /Scripts
 /build
+/bin
 /.vscode
 /dist
 /__pycache__
-solaris.spec
+*.spec
+*.txt
+*.jpg
+*.exe
