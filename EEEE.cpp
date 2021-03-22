@@ -27,7 +27,7 @@ int main()
     if (cecha==255 && mantysa==0 && b==0) cout<< "inf";
     else if (cecha==255 && mantysa==0 && b==1) cout<< "-inf";
     else if (cecha==0 && mantysa==0) cout<< "0";
-    else if (cecha==0 && mantysa!=0 && b==1) cout<< "Liczba nienormalna";
+    else if (cecha==0 && mantysa!=0) cout<< "Liczba nienormalna";
     else if (cecha==255 && mantysa!=0) cout<< "Liczba to nawet nie jest ona";
     else cout<<pow(-1,b)*(1+mantysa)*pow(2,cecha-127);
     return 0;
