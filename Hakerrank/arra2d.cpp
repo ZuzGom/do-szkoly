@@ -6,11 +6,12 @@ using namespace std;
 int hourglassSum(vector<vector<int>> arr) {
     int maxi = 0;
     int suma = 0;
-    for (int x = 0; x <= arr.size()-3; x++){
-        for (int y = 0; y <= arr[x].size()-3; y++){
+    for (int x = 0; x <= 3; x++){
+        for (int y = 0; y <= 3; y++){
             suma = arr[x][y] + arr[x][y+1] + arr[x][y+2]; 
             suma += arr[x+1][y+1];
             suma += arr[x+2][y] + arr[x+2][y+1] + arr[x+2][y+2];
+            if (x==0 && y==0) maxi = suma;
             if (suma >= maxi) maxi = suma;
             
         }
