@@ -1,4 +1,4 @@
-
+#UWAGA NIEGRZECZNY KOD
 #include <iostream>
 
 float f(float x){
