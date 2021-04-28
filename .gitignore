@@ -7,6 +7,9 @@
 /.vscode
 /dist
 /__pycache__
+.vstags
+tags
+*.png
 *.spec
 *.txt
 *.jpg
